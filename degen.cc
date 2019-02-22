@@ -29,19 +29,20 @@ int main() {
         degrees.insert(make_pair(graph[j].size(), j));
     }
 
-    while(!degrees.empty()) {
+    while (!degrees.empty()) {
         int min_deg = degrees.begin()->first;
-        if(degrees.begin()->first > max_deg) max_deg = degrees.begin()->first;
-        for(auto it = degrees.begin(); it != degrees.end(); ) {
-            if(it->first == min_deg){
+
+        if (degrees.begin()->first > max_deg) max_deg = degrees.begin()->first;
+
+        for (auto it = degrees.begin(); it != degrees.end();) {
+            if (it->first == min_deg) {
                 for (auto conn : graph[it->second]) {
                     graph[conn].erase(find(graph[conn].begin(), graph[conn].end(), it->second));
                     degrees.erase(make_pair(graph[conn].size() + 1, conn));
                     degrees.insert(make_pair(graph[conn].size(), conn));
                 }
                 degrees.erase(it++);
-            }
-            else break;
+            } else break;
         }
     }
 
